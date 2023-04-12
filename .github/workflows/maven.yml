@@ -1,0 +1,31 @@
+name: maven-build
+run-name: Run maven up to 'package' phase and archive JAR
+
+on: [push, pull_request]
+
+jobs:
+  maven-build:
+    runs-on: windows-2022
+    
+    strategy:
+      matrix:
+        version: ['17']
+        distribution: ['oracle']
+    
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: ${{ matrix.version }}
+        distribution: ${{ matrix.distribution }}
+        cache: maven
+    # todo: switch to 'verify' goal to run integration tests
+    #       once services have been defined
+    - name: Maven build
+      run: mvn -B -U clean package
+    - uses: actions/upload-artifact@v3
+      with:
+        name: compiled-jar
+        path: target/*.jar
+        retention-days: 1
