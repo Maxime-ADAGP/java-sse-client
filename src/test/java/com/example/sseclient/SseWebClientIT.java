@@ -8,7 +8,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import reactor.core.publisher.Flux;
 
-public class SseWebClientIntegrationTest {
+public class SseWebClientIT {
 	
 	private WebClient webClient = WebClient.builder()
 			.baseUrl("http://localhost:3000")
