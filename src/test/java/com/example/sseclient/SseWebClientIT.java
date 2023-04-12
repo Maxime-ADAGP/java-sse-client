@@ -16,7 +16,7 @@ public class SseWebClientIT {
 
 	@Test
 	void shouldRetrieveDataFromServer() {
-		SseWebClient sseWebClient = new SseWebClient(webClient);
+		SseWebClient<String> sseWebClient = new SseWebClient<>(webClient, String.class);
 		Flux<String> times = sseWebClient.retrieveData("/events");
 		
 		assertNotNull(times);

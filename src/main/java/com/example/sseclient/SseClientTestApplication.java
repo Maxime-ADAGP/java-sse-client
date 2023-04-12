@@ -16,7 +16,7 @@ public class SseClientTestApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SseClientTestApplication.class, args);
 		
-		SseWebClient client = new SseWebClient(webClient);
+		SseWebClient<String> client = new SseWebClient<>(webClient, String.class);
 		Flux<String> strs = client.retrieveData("/events");
 		strs.subscribe(new EventSubscriber<String>());
 		System.out.println(strs.blockFirst());
