@@ -18,7 +18,7 @@ public class SseClientTestApplication {
 		
 		SseWebClient<String> client = new SseWebClient<>(webClient, String.class);
 		Flux<String> strs = client.retrieveData("/events");
-		strs.subscribe(new EventSubscriber<String>());
+		strs.subscribe(new EventSubscriber<>());
 		System.out.println(strs.blockFirst());
 	}
 

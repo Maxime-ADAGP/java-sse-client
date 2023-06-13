@@ -20,6 +20,6 @@ public class SseWebClientIT {
 		Flux<String> times = sseWebClient.retrieveData("/events");
 		
 		assertNotNull(times);
-		assertTrue(times.take(5).count().block() > 0);
+		times.take(5).count().subscribe((c) -> assertTrue(c > 0));
 	}
 }
