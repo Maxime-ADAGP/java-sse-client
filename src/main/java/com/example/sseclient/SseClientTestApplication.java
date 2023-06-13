@@ -9,7 +9,7 @@ import reactor.core.publisher.Flux;
 @SpringBootApplication
 public class SseClientTestApplication {
 	
-	private static WebClient webClient = WebClient.builder()
+	private static final WebClient webClient = WebClient.builder()
 			.baseUrl("http://localhost:3000")
 			.build();
 

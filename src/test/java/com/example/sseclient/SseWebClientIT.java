@@ -10,7 +10,7 @@ import reactor.core.publisher.Flux;
 
 public class SseWebClientIT {
 	
-	private WebClient webClient = WebClient.builder()
+	private final WebClient webClient = WebClient.builder()
 			.baseUrl("http://localhost:3000")
 			.build();
 
