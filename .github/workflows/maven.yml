@@ -1,5 +1,5 @@
 name: maven-build
-run-name: Run maven up to 'package' phase and archive JAR
+run-name: Run maven up to 'verify' phase and archive JAR
 
 on: [push, pull_request]
 
