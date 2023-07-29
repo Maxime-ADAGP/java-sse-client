@@ -23,10 +23,8 @@ jobs:
         java-version: '17'
         distribution: 'oracle'
         cache: maven
-    # todo: switch to 'verify' goal to run integration tests
-    #       once services have been defined
     - name: Maven build
-      run: mvn -B clean package
+      run: mvn -B clean verify
     - uses: actions/upload-artifact@v3
       with:
         name: compiled-jar
