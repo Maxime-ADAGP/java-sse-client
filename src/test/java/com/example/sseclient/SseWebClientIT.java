@@ -60,4 +60,33 @@ public class SseWebClientIT {
 		assertNotNull(times);
 		times.take(5).count().subscribe((c) -> assertTrue(c > 0));
 	}
+
+	@ParameterizedTest
+	@ValueSource(ints = { 200, 401, 403 })
+	void shouldRetrievePrivilegedEvents(int httpCode) {
+		final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd"); // ISO 8601
+		final StringBuilder eventStreamBuilder = new StringBuilder();
+
+		// add 15 events
+		for (int i = 0; i < 15; i++) {
+			final String dateString = simpleDateFormat.format(new Date());
+			eventStreamBuilder
+					.append("event: newEvent\ndata: {\"event\":\"a new event occurred!\",\"eventDate\":\"")
+					.append(dateString)
+					.append("\"}\n\n");
+		}
+
+		mockWebServer.enqueue(
+				new MockResponse()
+						.setResponseCode(httpCode)
+						.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_EVENT_STREAM)
+						.setBody(eventStreamBuilder.toString())
+		);
+
+		Flux<String> times = webClient.retrievePrivilegedData("/events", "bearerToken");
+
+		assertNotNull(times);
+
+		assertDoesNotThrow(() -> times.take(5).count().subscribe((c) -> assertTrue(c > 0)));
+	}
 }
